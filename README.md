@@ -8,7 +8,7 @@ Sistema completo de inventario desarrollado con Node.js, Express y Sequelize que
 - Gestión de usuarios con roles (ADMIN/CLIENT)
 - CRUD completo de productos con soft delete
 - Sistema de órdenes de compra con validación de stock
-- Generación automática de facturas
+- Generación automática de facturas en formato json
 - Historial de compras por usuario
 - Autenticación JWT con middlewares de autorización
 
@@ -84,7 +84,7 @@ Antes de comenzar, asegúrate de tener instalado:
 ### 1. Clonar el repositorio
 
 ```bash
-git clone <url-del-repositorio>
+git clone https://github.com/yesiDevTura/api-client.git
 cd api
 ```
 
@@ -135,13 +135,35 @@ Esto creará las tablas en la base de datos:
 - `orders` - Órdenes de compra
 - `order_items` - Ítems de cada orden
 
-### 5. (Opcional) Ejecutar seeders
+### 5. Ejecutar seeders (Crear usuarios de prueba)
 
 ```bash
 npm run seed
 ```
 
-Crea datos de prueba (usuarios, productos, órdenes).
+Crea datos de prueba (usuarios admin y cliente).
+
+### 🔑 Credenciales de Prueba
+
+Después de ejecutar los seeders, tendrás estos usuarios disponibles:
+
+#### 👨‍💼 Usuario Administrador
+```
+Email:    admin@inventory.com
+Password: admin123
+Role:     ADMIN
+```
+✅ **Puede:** Crear/editar/eliminar productos, ver todas las órdenes, completar órdenes
+
+#### 👤 Usuario Cliente
+```
+Email:    cliente@inventory.com
+Password: admin123
+Role:     CLIENT
+```
+✅ **Puede:** Ver productos, crear órdenes, ver su historial de compras
+
+> ⚠️ **Importante:** Estas credenciales son solo para pruebas. En producción, cámbielas inmediatamente.
 
 ---
 
@@ -204,7 +226,7 @@ npm run test:unit
 
 La documentación está disponible de **2 formas**:
 
-#### Opción 1: Servidor en ejecución (Recomendado)
+#### Opción 1: Servidor en ejecución 
 
 1. Inicia el servidor:
    ```bash
@@ -332,21 +354,34 @@ npm run apidoc         # Generar documentación de API
 
 ---
 
-## 🔑 Usuarios de Prueba (después de seeders)
+## 🔑 Usuarios de Prueba para Testing
 
-### Administrador
-```
-Email: admin@inventory.com
-Password: admin123
-Role: ADMIN
-```
+Después de ejecutar `npm run seed`, estos usuarios estarán disponibles:
 
-### Cliente
+### 👨‍💼 Administrador
 ```
-Email: cliente@inventory.com
+Email:    admin@inventory.com
 Password: admin123
-Role: CLIENT
+Role:     ADMIN
 ```
+**Permisos:**
+- ✅ Gestión completa de productos (CRUD)
+- ✅ Ver todas las órdenes de todos los usuarios
+- ✅ Completar órdenes
+- ✅ Acceso a todos los endpoints administrativos
+
+### 👤 Cliente
+```
+Email:    cliente@inventory.com
+Password: admin123
+Role:     CLIENT
+```
+**Permisos:**
+- ✅ Ver catálogo de productos
+- ✅ Crear y gestionar sus propias órdenes
+- ✅ Ver su historial de compras
+- ✅ Cancelar órdenes pendientes
+- ❌ NO puede gestionar productos ni ver órdenes de otros usuarios
 
 ### 🔒 Nota de Seguridad
 
@@ -421,4 +456,3 @@ Para reportar bugs o solicitar features, por favor abre un issue en el repositor
 
 ---
 
-**⭐ Si te gustó este proyecto, dale una estrella en GitHub!**
