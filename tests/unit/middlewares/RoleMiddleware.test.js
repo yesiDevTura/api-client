@@ -46,14 +46,14 @@ describe('RoleMiddleware', () => {
   describe('isAdmin', () => {
     it('should allow ADMIN users', () => {
       req.user = { role: 'ADMIN' };
-      const middleware = RoleMiddleware.isAdmin();
+      const middleware = RoleMiddleware.isAdmin;
       middleware(req, res, next);
       expect(next).toHaveBeenCalledWith();
     });
 
     it('should deny non-ADMIN users', () => {
       req.user = { role: 'CLIENT' };
-      const middleware = RoleMiddleware.isAdmin();
+      const middleware = RoleMiddleware.isAdmin;
       middleware(req, res, next);
       expect(next).toHaveBeenCalledWith(expect.any(AppError));
     });
@@ -62,14 +62,14 @@ describe('RoleMiddleware', () => {
   describe('isClient', () => {
     it('should allow CLIENT users', () => {
       req.user = { role: 'CLIENT' };
-      const middleware = RoleMiddleware.isClient();
+      const middleware = RoleMiddleware.isClient;
       middleware(req, res, next);
       expect(next).toHaveBeenCalledWith();
     });
 
     it('should deny non-CLIENT users', () => {
       req.user = { role: 'ADMIN' };
-      const middleware = RoleMiddleware.isClient();
+      const middleware = RoleMiddleware.isClient;
       middleware(req, res, next);
       expect(next).toHaveBeenCalledWith(expect.any(AppError));
     });
@@ -78,21 +78,21 @@ describe('RoleMiddleware', () => {
   describe('isAuthenticated', () => {
     it('should allow ADMIN users', () => {
       req.user = { role: 'ADMIN' };
-      const middleware = RoleMiddleware.isAuthenticated();
+      const middleware = RoleMiddleware.isAuthenticated;
       middleware(req, res, next);
       expect(next).toHaveBeenCalledWith();
     });
 
     it('should allow CLIENT users', () => {
       req.user = { role: 'CLIENT' };
-      const middleware = RoleMiddleware.isAuthenticated();
+      const middleware = RoleMiddleware.isAuthenticated;
       middleware(req, res, next);
       expect(next).toHaveBeenCalledWith();
     });
 
     it('should deny unauthenticated users', () => {
       req.user = null;
-      const middleware = RoleMiddleware.isAuthenticated();
+      const middleware = RoleMiddleware.isAuthenticated;
       middleware(req, res, next);
       expect(next).toHaveBeenCalledWith(expect.any(AppError));
     });

@@ -118,9 +118,11 @@ class ProductValidator {
     quantity: Joi.number()
       .required()
       .integer()
+      .positive()
       .messages({
         'number.base': 'La cantidad debe ser un número',
         'number.integer': 'La cantidad debe ser un número entero',
+        'number.positive': 'La cantidad debe ser positiva',
         'any.required': 'La cantidad es requerida',
       }),
   });
