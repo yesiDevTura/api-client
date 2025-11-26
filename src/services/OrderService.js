@@ -113,7 +113,7 @@ class OrderService {
       await transaction.commit();
 
       // Return order with details
-      const createdOrder = await this.getOrderById(order.id, userId);
+      const createdOrder = await this.getOrderById(order.id, userId, 'CLIENT');
       logger.info(`Order created: ${order.id} by user ${userId}`);
 
       return createdOrder;
