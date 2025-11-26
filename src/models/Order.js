@@ -93,6 +93,18 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
+      status: {
+        type: DataTypes.ENUM('PENDING', 'COMPLETED', 'CANCELLED'),
+        allowNull: false,
+        defaultValue: 'PENDING',
+        validate: {
+          notNull: { msg: 'El estado es requerido' },
+          isIn: {
+            args: [['PENDING', 'COMPLETED', 'CANCELLED']],
+            msg: 'Estado inválido',
+          },
+        },
+      },
     },
     {
       sequelize,
@@ -105,6 +117,9 @@ module.exports = (sequelize, DataTypes) => {
         },
         {
           fields: ['createdAt'],
+        },
+        {
+          fields: ['status'],
         },
       ],
     }
