@@ -28,11 +28,11 @@ class ErrorHandler {
   }
 
   static sendErrorDevelopment(err, res) {
-    logger.error('Error en desarrollo:', {
+    const logLevel = err.statusCode >= 500 ? 'error' : 'warn';
+    logger[logLevel](err.message, {
       status: err.statusCode,
-      message: err.message,
-      stack: err.stack,
-      error: err,
+      code: err.code,
+      ...(err.statusCode >= 500 && { stack: err.stack }),
     });
 
     res.status(err.statusCode).json({
@@ -41,17 +41,17 @@ class ErrorHandler {
         code: err.code,
         message: err.message,
         statusCode: err.statusCode,
-        stack: err.stack,
-        details: err.details,
+        ...(err.details && { details: err.details }),
       },
     });
   }
 
   static sendErrorProduction(err, res) {
     if (err.isOperational) {
-      logger.error('Error operacional:', {
+      const logLevel = err.statusCode >= 500 ? 'error' : 'warn';
+      logger[logLevel](err.message, {
         status: err.statusCode,
-        message: err.message,
+        code: err.code,
       });
 
       res.status(err.statusCode).json({
@@ -64,10 +64,9 @@ class ErrorHandler {
         },
       });
     } else {
-      logger.error('Error no operacional:', {
+      logger.error('Error crítico no controlado:', {
         message: err.message,
         stack: err.stack,
-        error: err,
       });
 
       res.status(500).json({
