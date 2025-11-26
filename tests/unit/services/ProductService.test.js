@@ -213,13 +213,13 @@ describe('ProductService', () => {
       const mockProduct = {
         id: 'product-id',
         stock: 10,
-        addStock: jest.fn().mockResolvedValue(true),
+        increaseStock: jest.fn().mockResolvedValue(true),
       };
       Product.findByPk = jest.fn().mockResolvedValue(mockProduct);
 
       await ProductService.addStock('product-id', 20);
 
-      expect(mockProduct.addStock).toHaveBeenCalledWith(20);
+      expect(mockProduct.increaseStock).toHaveBeenCalledWith(20);
     });
   });
 
@@ -228,13 +228,13 @@ describe('ProductService', () => {
       const mockProduct = {
         id: 'product-id',
         stock: 50,
-        removeStock: jest.fn().mockResolvedValue(true),
+        decreaseStock: jest.fn().mockResolvedValue(true),
       };
       Product.findByPk = jest.fn().mockResolvedValue(mockProduct);
 
       await ProductService.removeStock('product-id', 10);
 
-      expect(mockProduct.removeStock).toHaveBeenCalledWith(10);
+      expect(mockProduct.decreaseStock).toHaveBeenCalledWith(10);
     });
   });
 });

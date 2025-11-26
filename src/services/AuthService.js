@@ -22,8 +22,14 @@ class AuthService {
         throw AppError.conflict('El email ya está registrado');
       }
 
+      // Force CLIENT role for public registration (security)
+      const userDataWithRole = {
+        ...userData,
+        role: 'CLIENT'
+      };
+
       // Create user (password will be hashed by model hook)
-      const user = await User.create(userData);
+      const user = await User.create(userDataWithRole);
 
       // Generate JWT token
       const token = AuthService.generateToken(user);

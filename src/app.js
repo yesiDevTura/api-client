@@ -26,8 +26,19 @@ class App {
    * Configure application middlewares
    */
   configureMiddlewares() {
-    // Security middleware
-    this.app.use(helmet());
+    // Security middleware with CSP exception for docs
+    this.app.use(
+      helmet({
+        contentSecurityPolicy: {
+          directives: {
+            defaultSrc: ["'self'"],
+            scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+            styleSrc: ["'self'", "'unsafe-inline'"],
+            imgSrc: ["'self'", "data:", "https:"],
+          },
+        },
+      })
+    );
 
     // CORS configuration
     const corsOptions = {

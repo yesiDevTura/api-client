@@ -26,8 +26,8 @@ class AuthValidator {
         'string.min': 'La contraseña debe tener al menos 6 caracteres',
         'any.required': 'La contraseña es requerida',
       }),
-      role: Joi.string().valid('ADMIN', 'CLIENT').default('CLIENT').messages({
-        'any.only': 'El rol debe ser ADMIN o CLIENT',
+      role: Joi.string().valid('CLIENT').default('CLIENT').messages({
+        'any.only': 'Solo se permite registro como CLIENT',
       }),
     });
   }

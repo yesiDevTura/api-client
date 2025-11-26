@@ -65,7 +65,7 @@
  * @apiName GetProducts
  * @apiGroup Products
  * @apiVersion 1.0.0
- * @apiPermission admin
+ * @apiPermission client,admin
  *
  * @apiUse AuthHeader
  *
@@ -89,7 +89,7 @@
  * @apiName GetProduct
  * @apiGroup Products
  * @apiVersion 1.0.0
- * @apiPermission admin
+ * @apiPermission client,admin
  *
  * @apiUse AuthHeader
  * @apiParam {String} id ID del producto

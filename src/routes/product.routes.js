@@ -8,10 +8,34 @@ const RoleMiddleware = require('../middlewares/RoleMiddleware');
 const router = express.Router();
 
 /**
- * All product routes require authentication and ADMIN role
+ * Public routes (require authentication but any role)
  */
-router.use(AuthMiddleware.authenticate);
-router.use(RoleMiddleware.isAdmin);
+
+/**
+ * @route   GET /api/products
+ * @desc    Get all products with pagination and filters
+ * @access  Authenticated users (CLIENT and ADMIN)
+ */
+router.get(
+  '/',
+  AuthMiddleware.authenticate,
+  ProductController.getAllProducts
+);
+
+/**
+ * @route   GET /api/products/:id
+ * @desc    Get product by ID
+ * @access  Authenticated users (CLIENT and ADMIN)
+ */
+router.get(
+  '/:id',
+  AuthMiddleware.authenticate,
+  ProductController.getProductById
+);
+
+/**
+ * Admin-only routes
+ */
 
 /**
  * @route   POST /api/products
@@ -20,23 +44,11 @@ router.use(RoleMiddleware.isAdmin);
  */
 router.post(
   '/',
+  AuthMiddleware.authenticate,
+  RoleMiddleware.isAdmin,
   ValidationMiddleware.validate(ProductValidator.create),
   ProductController.createProduct
 );
-
-/**
- * @route   GET /api/products
- * @desc    Get all products with pagination and filters
- * @access  Admin only
- */
-router.get('/', ProductController.getAllProducts);
-
-/**
- * @route   GET /api/products/:id
- * @desc    Get product by ID
- * @access  Admin only
- */
-router.get('/:id', ProductController.getProductById);
 
 /**
  * @route   PUT /api/products/:id
@@ -45,6 +57,8 @@ router.get('/:id', ProductController.getProductById);
  */
 router.put(
   '/:id',
+  AuthMiddleware.authenticate,
+  RoleMiddleware.isAdmin,
   ValidationMiddleware.validate(ProductValidator.update),
   ProductController.updateProduct
 );
@@ -54,7 +68,12 @@ router.put(
  * @desc    Delete product
  * @access  Admin only
  */
-router.delete('/:id', ProductController.deleteProduct);
+router.delete(
+  '/:id',
+  AuthMiddleware.authenticate,
+  RoleMiddleware.isAdmin,
+  ProductController.deleteProduct
+);
 
 /**
  * @route   PATCH /api/products/:id/add-stock
@@ -63,6 +82,8 @@ router.delete('/:id', ProductController.deleteProduct);
  */
 router.patch(
   '/:id/add-stock',
+  AuthMiddleware.authenticate,
+  RoleMiddleware.isAdmin,
   ValidationMiddleware.validate(ProductValidator.updateStock),
   ProductController.addStock
 );
@@ -74,6 +95,8 @@ router.patch(
  */
 router.patch(
   '/:id/remove-stock',
+  AuthMiddleware.authenticate,
+  RoleMiddleware.isAdmin,
   ValidationMiddleware.validate(ProductValidator.updateStock),
   ProductController.removeStock
 );

@@ -174,7 +174,7 @@ class ProductService {
     try {
       const product = await this.getProductById(id);
 
-      await product.addStock(quantity);
+      await product.increaseStock(quantity);
 
       logger.info(`Stock added to product ${id}: +${quantity}`);
       return product;
@@ -191,7 +191,7 @@ class ProductService {
     try {
       const product = await this.getProductById(id);
 
-      await product.removeStock(quantity);
+      await product.decreaseStock(quantity);
 
       logger.info(`Stock removed from product ${id}: -${quantity}`);
       return product;

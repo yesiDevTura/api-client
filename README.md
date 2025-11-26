@@ -247,12 +247,15 @@ POST   /api/auth/login     - Iniciar sesión
 GET    /api/auth/me        - Obtener perfil actual
 ```
 
-#### 📦 Productos (ADMIN)
+#### 📦 Productos
 
 ```
-POST   /api/products           - Crear producto
+# Accesible para CLIENT y ADMIN (solo lectura)
 GET    /api/products           - Listar productos (paginado)
 GET    /api/products/:id       - Obtener producto por ID
+
+# Solo ADMIN (escritura)
+POST   /api/products           - Crear producto
 PUT    /api/products/:id       - Actualizar producto
 DELETE /api/products/:id       - Eliminar producto (soft delete)
 PATCH  /api/products/:id/stock - Actualizar stock
@@ -340,10 +343,19 @@ Role: ADMIN
 
 ### Cliente
 ```
-Email: client@inventory.com
-Password: client123
+Email: cliente@inventory.com
+Password: admin123
 Role: CLIENT
 ```
+
+### 🔒 Nota de Seguridad
+
+⚠️ **El endpoint de registro público (`/api/auth/register`) solo permite crear usuarios con rol CLIENT por razones de seguridad.**
+
+- ✅ Usuarios CLIENT se registran libremente
+- ❌ Usuarios ADMIN NO se pueden crear mediante registro público
+- 👥 El primer usuario ADMIN se crea mediante seeder (`npm run seed`)
+- 🔐 Para crear más ADMIN: Inserta directamente en la base de datos o crea un endpoint protegido exclusivo para ADMIN
 
 ---
 
