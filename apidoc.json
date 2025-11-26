@@ -1,0 +1,8 @@
+{
+  "name": "Inventory API",
+  "version": "1.0.0",
+  "description": "API REST para gestión de inventario con autenticación y control de roles",
+  "title": "Inventory Management API",
+  "url": "http://localhost:3000",
+  "sampleUrl": "http://localhost:3000"
+}

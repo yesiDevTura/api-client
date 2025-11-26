@@ -17,7 +17,13 @@
     "db:reset": "sequelize-cli db:migrate:undo:all && sequelize-cli db:migrate && sequelize-cli db:seed:all",
     "apidoc": "apidoc -i src/routes/ -o docs/"
   },
-  "keywords": ["api", "inventory", "nodejs", "sequelize", "postgresql"],
+  "keywords": [
+    "api",
+    "inventory",
+    "nodejs",
+    "sequelize",
+    "postgresql"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -36,6 +42,7 @@
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",
+    "apidoc": "^1.2.0",
     "jest": "^30.2.0",
     "nodemon": "^3.1.11",
     "sequelize-cli": "^6.6.3",
