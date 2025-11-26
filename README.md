@@ -202,12 +202,33 @@ npm run test:unit
 
 ### Ver documentación interactiva
 
+La documentación está disponible de **2 formas**:
+
+#### Opción 1: Servidor en ejecución (Recomendado)
+
+1. Inicia el servidor:
+   ```bash
+   npm run dev
+   ```
+
+2. Abre en tu navegador:
+   ```
+   http://localhost:3000/docs
+   ```
+
+   En producción (Render):
+   ```
+   https://tu-app.onrender.com/docs
+   ```
+
+#### Opción 2: Archivo local
+
 1. Generar documentación (ya está generada):
    ```bash
    npm run apidoc
    ```
 
-2. Abrir el archivo `docs/index.html` en tu navegador
+2. Abrir el archivo `docs/index.html` directamente en tu navegador
 
 La documentación incluye:
 - Todos los endpoints disponibles

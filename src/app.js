@@ -71,6 +71,9 @@ class App {
    * Configure application routes
    */
   configureRoutes() {
+    // Serve API documentation
+    this.app.use('/docs', express.static('docs'));
+
     // Health check endpoint
     this.app.get('/health', (req, res) => {
       res.status(200).json({
