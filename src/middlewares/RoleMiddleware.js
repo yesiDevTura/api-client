@@ -30,25 +30,25 @@ class RoleMiddleware {
 
   /**
    * Check if user is admin
-   * @returns {Function} Express middleware
+   * Express middleware
    */
-  static isAdmin() {
+  static get isAdmin() {
     return RoleMiddleware.authorize('ADMIN');
   }
 
   /**
    * Check if user is client
-   * @returns {Function} Express middleware
+   * Express middleware
    */
-  static isClient() {
+  static get isClient() {
     return RoleMiddleware.authorize('CLIENT');
   }
 
   /**
    * Allow both admin and client
-   * @returns {Function} Express middleware
+   * Express middleware
    */
-  static isAuthenticated() {
+  static get isAuthenticated() {
     return RoleMiddleware.authorize('ADMIN', 'CLIENT');
   }
 }

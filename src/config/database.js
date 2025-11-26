@@ -14,8 +14,12 @@ module.exports = {
     pool: {
       max: 5,
       min: 0,
-      acquire: 30000,
+      acquire: 60000, // 60 segundos para adquirir conexión
       idle: 10000,
+      evict: 10000,
+    },
+    retry: {
+      max: 3,
     },
   },
   test: {

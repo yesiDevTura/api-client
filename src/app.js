@@ -7,6 +7,7 @@ const logger = require('./config/logger');
 
 // Import routes
 const authRoutes = require('./routes/auth.routes');
+const productRoutes = require('./routes/product.routes');
 
 /**
  * Application Class
@@ -81,7 +82,7 @@ class App {
 
     // API routes
     this.app.use('/api/auth', authRoutes);
-    // this.app.use('/api/products', productRoutes);
+    this.app.use('/api/products', productRoutes);
     // this.app.use('/api/orders', orderRoutes);
 
     // API root endpoint

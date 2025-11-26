@@ -54,6 +54,24 @@ module.exports = (sequelize, DataTypes) => {
     isAvailable() {
       return this.stock > 0;
     }
+
+    /**
+     * Generate next lot number
+     * @returns {Promise<string>}
+     */
+    static async generateLotNumber() {
+      try {
+        // Contar todos los productos para generar el siguiente número
+        const count = await Product.count();
+        const nextNumber = count + 1;
+        return `LOT-${nextNumber.toString().padStart(4, '0')}`;
+      } catch (error) {
+        console.error('Error generating lot number:', error);
+        // Fallback: genera un número aleatorio
+        const random = Math.floor(Math.random() * 9999) + 1;
+        return `LOT-${random.toString().padStart(4, '0')}`;
+      }
+    }
   }
 
   Product.init(
@@ -65,12 +83,11 @@ module.exports = (sequelize, DataTypes) => {
       },
       lotNumber: {
         type: DataTypes.STRING(50),
-        allowNull: false,
+        allowNull: true,
         unique: {
           msg: 'El número de lote ya existe',
         },
         validate: {
-          notNull: { msg: 'El número de lote es requerido' },
           notEmpty: { msg: 'El número de lote no puede estar vacío' },
         },
       },
@@ -113,10 +130,9 @@ module.exports = (sequelize, DataTypes) => {
       },
       entryDate: {
         type: DataTypes.DATEONLY,
-        allowNull: false,
+        allowNull: true,
         defaultValue: DataTypes.NOW,
         validate: {
-          notNull: { msg: 'La fecha de ingreso es requerida' },
           isDate: { msg: 'Debe ser una fecha válida' },
         },
       },
@@ -124,12 +140,27 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: true,
       },
+      isActive: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
+        validate: {
+          notNull: { msg: 'El estado activo es requerido' },
+        },
+      },
     },
     {
       sequelize,
       modelName: 'Product',
       tableName: 'products',
       timestamps: true,
+      hooks: {
+        beforeCreate: async (product) => {
+          if (!product.lotNumber) {
+            product.lotNumber = await Product.generateLotNumber();
+          }
+        },
+      },
       indexes: [
         {
           unique: true,
